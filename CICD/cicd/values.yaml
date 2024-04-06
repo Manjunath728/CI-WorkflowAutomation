@@ -16,6 +16,7 @@ frontend:
   port: 80
   env:
     API_SERVICE_HOST: "backend:3000"
+  targetPort : 80
 
 db:
   image: mysql:latest
