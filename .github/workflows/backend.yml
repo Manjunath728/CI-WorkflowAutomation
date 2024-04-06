@@ -6,13 +6,11 @@ on:
       - main
     paths:
       - 'backend/**'
-      - 'frontend/**'
   pull_request:
     branches:
       - main
     paths:
       - 'backend/**'
-      - 'frontend/**'
 
 jobs:
   push_to_registry:
@@ -42,17 +40,9 @@ jobs:
           context: backend/
           push: true
           tags: manjunath728/demo-backend:${{ steps.tag.outputs.TAG }}
-      
-      - name: Build and push Docker image for frontend
-        uses: docker/build-push-action@v3
-        with:
-          context: frontend/
-          push: true
-          tags: manjunath728/demo-frontend:${{ steps.tag.outputs.TAG }}
-
       - name: Update Helm chart values
         run: |
-          sed -i 's/\(tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/' cicd/values.yaml
+          sed -i 's/\(backend:\s*image:\s*manjunath728\/demo-backend:\s*tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/' cicd/values.yaml
         working-directory: ./CICD/
 
       - uses: stefanzweifel/git-auto-commit-action@v5
