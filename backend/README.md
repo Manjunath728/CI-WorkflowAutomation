@@ -26,4 +26,4 @@ Run the application with the command: `npm start` (replace with appropriate comm
 ## Testing
 
 To run the tests, use the command: `npm test` (replace with appropriate command for your tech stack)
-
+Ok, let's get started!

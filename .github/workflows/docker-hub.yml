@@ -52,7 +52,7 @@ jobs:
 
       - name: Update Helm chart values
         run: |
-          sed -i 's/\(tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/g' cicd/values.yaml
+          sed -i 's/\(tag:\s*\)"[0-9]*"/\1"${{ steps.tag.outputs.TAG }}"/g' cicd/values.yaml
         working-directory: ./CICD/
 
       - uses: stefanzweifel/git-auto-commit-action@v5

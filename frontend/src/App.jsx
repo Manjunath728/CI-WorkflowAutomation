@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="heading">Manage Persons</h1>
+      <h1 className="heading">Manage Persons Microservice</h1>
       <div className="form">
         <input className="input" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input className="input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
