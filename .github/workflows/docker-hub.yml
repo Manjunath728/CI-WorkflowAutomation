@@ -48,8 +48,8 @@ jobs:
 
       - name: Update Helm chart values
         run: |
-          sed -i 's/\(tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/' my-chart/values.yaml
-        working-directory: ./CICD/my-chart
+          sed -i 's/\(tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/' cicd/values.yaml
+        working-directory: ./CICD/
 
       - name: Commit and push changes
         run: |
