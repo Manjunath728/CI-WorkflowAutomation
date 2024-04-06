@@ -27,4 +27,5 @@ Run the application with the command: `npm start` (replace with appropriate comm
 
 To run the tests, use the command: `npm test` (replace with appropriate command for your tech stack)
 
-## Testing again last time
+## Testing again last time to check if it works
+'s/\(tag:\s*\)[0-9]*/\1${{ steps.tag.outputs.TAG }}/'
