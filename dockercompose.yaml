@@ -17,8 +17,7 @@ services:
     build:
       context: ./backend
       dockerfile: dockerfile
-    ports:
-      - "3000:3000"
+      image: demo-backend
     depends_on:
       db:
         condition: service_healthy
@@ -37,6 +36,7 @@ services:
     build:
       context: ./frontend
       dockerfile: dockerfile
+      image: demo-frontend
     ports:
       - "80:80"
     environment:
