@@ -1,5 +1,5 @@
 # Stage 1: Build react app
-FROM node:20.12.1-alpine AS build
+FROM node:20.12.1 AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve react app using NGINX
-FROM nginx:stable-alpine3.17-slim
+FROM nginx:latest
 # Install envsubst
 RUN apk update && \
     apk add --no-cache gettext

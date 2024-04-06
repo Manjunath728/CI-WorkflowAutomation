@@ -9,15 +9,12 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       retries: 3
-      interval: 5s
-      timeout: 5s
-      start_period: 10s
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: dockerfile
-      image: demo-backend
+    image: manjunath728/demo-backend:latest
     depends_on:
       db:
         condition: service_healthy
@@ -31,12 +28,10 @@ services:
       test: ["CMD-SHELL", "curl --fail http://localhost:3000 || exit 1"]
       interval: 3s
       timeout: 5s
-      retries: 20
+      retries: 5
+      start_period: 15s
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: dockerfile
-      image: demo-frontend
+    image: manjunath728/demo-frontend:latest
     ports:
       - "80:80"
     environment:
