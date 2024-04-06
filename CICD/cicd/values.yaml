@@ -1,0 +1,25 @@
+# Default values for my-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+backend:
+  image: manjunath728/demo-backend
+  port: 3000
+  env:
+    DB_HOST: "db"
+    DB_USER: "root"
+    DB_ROOT_PASSWORD: "admin"
+    DB_NAME: "Person"
+
+frontend:
+  image: manjunath728/demo-frontend
+  port: 80
+  env:
+    API_SERVICE_HOST: "backend:3000"
+
+db:
+  image: mysql:latest
+  port: 3306
+  env:
+    MYSQL_ROOT_PASSWORD: "admin"
+    MYSQL_DATABASE: "Person"
