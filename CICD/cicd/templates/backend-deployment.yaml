@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: {{ .Values.backend.image }}
+          image: {{ .Values.backend.image }} : {{ .Values.backend.tag }}
           env:
             {{- range $key, $value := .Values.backend.env }}
             - name: {{ $key }}
