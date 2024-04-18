@@ -10,4 +10,4 @@ spec:
       port: {{ .Values.frontend.port }}
       targetPort: {{ .Values.frontend.targetPort }}
       name: http
-  type: LoadBalancer
+  type: NodePort

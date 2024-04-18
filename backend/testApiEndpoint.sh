@@ -55,41 +55,65 @@ function update_person {
 function delete_person {
     curl -s -X DELETE "$base_url/api/person/$1"
 }
-
 # Function to check all endpoints using sample data
 function check_all_endpoints {
     echo "Checking all endpoints using sample data..."
     
     # Perform health check
-    health_check
+    if ! health_check; then
+        echo "Health check failed. Exiting..."
+        exit 1
+    fi
 
     # Delete all entries
     echo "Deleting all entries..."
     person_ids=$(get_all_persons | jq -r '.[].id')
     for id in $person_ids; do
-        delete_person $id 
+        if ! delete_person $id; then
+            echo "Failed to delete person with ID $id. Exiting..."
+            exit 1
+        fi
     done
     echo "Done"
 
     # Add sample person
     echo "Adding sample person..."
-    add_person "John Doe" "john@example.com" 
+    if ! add_person "John Doe" "john@example.com"; then
+        echo "Failed to add sample person. Exiting..."
+        exit 1
+    fi
     echo "Done"
-    # Gel all persons
+
+    # Get all persons
     echo "Get all sample person..."
-    get_all_persons 
+    if ! get_all_persons; then
+        echo "Failed to get all persons. Exiting..."
+        exit 1
+    fi
     echo "Done"
+
     # Update sample person
     echo "Updating sample person..."
-    update_person 1 "merry" "merry@example.com" 
+    if ! update_person 1 "merry" "merry@example.com"; then
+        echo "Failed to update sample person. Exiting..."
+        exit 1
+    fi
     echo "Done" 
-    # Gel all persons
+
+    # Get all persons
     echo "Get all sample person..."
-    get_all_persons 
+    if ! get_all_persons; then
+        echo "Failed to get all persons. Exiting..."
+        exit 1
+    fi
     echo "Done"
+
     # Delete sample person
     echo "Deleting sample person..."
-    delete_person 1 
+    if ! delete_person 1; then
+        echo "Failed to delete sample person. Exiting..."
+        exit 1
+    fi
     echo "Done"
 
     echo "All endpoints checked."
@@ -124,7 +148,9 @@ check_base_url
 
 # Auto mode: Check all endpoints using sample data
 if [ "$auto" = true ]; then
-    check_all_endpoints
+    if ! check_all_endpoints; then
+        exit 1
+    fi
     exit 0
 fi
 
@@ -156,26 +182,38 @@ while true; do
         4)
             read -p "Enter person name: " person_name
             read -p "Enter person email: " person_email
-            add_person "$person_name" "$person_email"
+            if ! add_person "$person_name" "$person_email"; then
+                echo "Failed to add person. Exiting..."
+                exit 1
+            fi
             ;;
-        5)
+         5)
             read -p "Enter person ID to update: " person_id
             read -p "Enter updated name: " updated_name
             read -p "Enter updated email: " updated_email
-            update_person $person_id "$updated_name" "$updated_email"
+            if ! update_person $person_id "$updated_name" "$updated_email"; then
+                echo "Failed to update person. Exiting..."
+                exit 1
+            fi
             ;;
         6)
             read -p "Enter person ID to delete: " person_id
-            delete_person $person_id
+            if ! delete_person $person_id; then
+                echo "Failed to delete person. Exiting..."
+                exit 1
+            fi
             ;;
         7)
-            check_all_endpoints
+            if ! check_all_endpoints; then
+                exit 1
+            fi
+            exit 0
             ;;
         8)
             exit 0
             ;;
         *)
-            echo "Invalid choice. Please enter a number between 1 and 7."
+            echo "Invalid choice. Please enter a number between 1 and 8."
             ;;
     esac
 done

@@ -1,0 +1,36 @@
+version: '3.8'
+#this yaml file to start backend and db services
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 10s
+      start_period: 10s
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_ROOT_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3000 || exit 1"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
