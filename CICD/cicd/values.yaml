@@ -4,7 +4,7 @@
 
 backend:
   image: manjunath728/demo-backend
-  tag: "20240418104123"
+  tag: "20240418104551"
   port: 3000
   env:
     DB_HOST: "db"
@@ -14,7 +14,7 @@ backend:
 
 frontend:
   image: manjunath728/demo-frontend
-  tag: "20240418104123"
+  tag: "20240418104551"
   port: 80
   env:
     API_SERVICE_HOST: "backend:3000"
