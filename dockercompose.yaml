@@ -30,11 +30,11 @@ services:
       test: ["CMD-SHELL", "curl --fail http://localhost:3000 || exit 1"]
       interval: 3s
       timeout: 5s
-      retries: 5
+      retries: 30
       start_period: 15s
   frontend:
     build:
-      context: ./backend
+      context: ./frontend
       dockerfile: dockerfile
     ports:
       - "80:80"
@@ -42,4 +42,15 @@ services:
       API_SERVICE_HOST: backend:3000
     depends_on:
       backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost || exit 1"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+  check:
+    image: curlimages/curl:latest
+    depends_on:
+      frontend:
         condition: service_healthy
