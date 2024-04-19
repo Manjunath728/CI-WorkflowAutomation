@@ -107,7 +107,7 @@ function App() {
   return (
     <div className="container">
     <ToastContainer />
-      <h1 className="heading" style={{color:"red"}} >🎆 People Manager Microservice 🧑‍🤝‍🧑 </h1>
+      <h1 className="heading" style={{color:"red"}} >🎆 People Manager Microservice 🧑‍🤝‍🧑 😃 </h1>
      
 
       <div className="cards-container">
